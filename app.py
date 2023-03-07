@@ -151,6 +151,13 @@ def edit_task(task_id):
     return render_template("edit_task.html", task=task, categories=categories)
 
 
+@app.route("/delete_task/<task_id>")
+def delete_task(task_id):
+    mongo.db.tasks.delete_one({"_id": ObjectId(task_id)})
+    flash("Task Successively Deleted")
+    return redirect(url_for("get_tasks"))
+
+
 if __name__ == "__main__":
     app.run(
         host=os.environ.get("IP"),
